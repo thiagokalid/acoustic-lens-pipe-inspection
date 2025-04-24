@@ -27,6 +27,6 @@ class Transducer:
 
     def get_signal(self, tspan: ndarray, delta_t: float = 0):
         if self.pulse_type == "gaussian":
-            return gausspulse((tspan - delta_t) * 1e-6, fc=self.fc, bw=self.bw, bwr=self.bwr)
+            return gausspulse(tspan - delta_t, fc=self.fc, bw=self.bw, bwr=self.bwr)
         else:
             raise NotImplementedError
