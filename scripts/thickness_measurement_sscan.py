@@ -1,6 +1,11 @@
+import sys, os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
 import numpy as np
 import matplotlib
-from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt    
 from pipe_lens.imaging_utils import convert_time2radius
 from framework import file_m2k
 from framework.post_proc import envelope
