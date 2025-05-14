@@ -117,7 +117,7 @@ for i in tqdm(range(len(rows) * len(versions))):
 
     if True:
         # Plotting S-scans with identified scatterers:
-        plt.figure()
+        plt.figure(figsize=(8,6))
         plt.subplot(2, 1, 1)
         plt.suptitle(filename)
 
@@ -125,17 +125,23 @@ for i in tqdm(range(len(rows) * len(versions))):
         sscan_db = np.log10(sscan_plot + 1e-6)
 
 
-        plt.imshow(sscan_db, extent=[ang_span[0], ang_span[-1], t_span[-1], t_span[0]], aspect='auto', vmin=-6, vmax=0)
-        plt.plot(ang_flaw_1, time_flaw_1, 'or', markersize=6)
-        plt.plot(ang_flaw_2, time_flaw_2, 'or', markersize=6)
-
+        plt.title("S-scan (log-scale)")
+        plt.imshow(sscan_db, extent=[ang_span[0], ang_span[-1], t_span[-1], t_span[0]], aspect='auto', vmin=-6, vmax=0, cmap='viridis')
+        plt.plot(ang_flaw_1, time_flaw_1, 'xr', markersize=6)
+        plt.plot(ang_flaw_2, time_flaw_2, 'ob', markersize=6)
+        plt.ylabel(r"Time / ($\mathrm{\mu s}$)")
+        plt.xlabel(r"$\alpha$-axis / (degrees)")
+        plt.grid(alpha=.5)
 
         plt.subplot(2, 1, 2)
+        plt.title("S-scan column and it's peak.")
         plt.plot(t_span_croped, a_scan_flaw_1, color='r')
         plt.plot(time_flaw_1, a_scan_flaw_1.max(), 'xr')
         plt.plot(t_span_croped, a_scan_flaw_2, 'b')
         plt.plot(time_flaw_2, a_scan_flaw_2.max(), 'ob')
-
+        plt.xlabel(r"Time / ($\mathrm{\mu s}$)")
+        plt.grid(alpha=.75)
+        plt.tight_layout()
         plt.show()
 
     # Obtendo o valor do maximo da externa apenas da primeira falha para plot exemplo do A-scan

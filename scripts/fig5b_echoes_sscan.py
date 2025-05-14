@@ -5,13 +5,10 @@ sys.path.append(parent_dir)
 
 import numpy as np
 import matplotlib
-from numpy import pi
 from matplotlib import pyplot as plt
 from matplotlib.ticker import FuncFormatter, MultipleLocator
 from framework import file_m2k
 from framework.post_proc import envelope
-from pipe_lens.acoustic_lens import AcousticLens
-from pipe_lens.geometric_utils import Pipeline
 linewidth = 6.3091141732 # LaTeX linewidth
 
 matplotlib.use('TkAgg')

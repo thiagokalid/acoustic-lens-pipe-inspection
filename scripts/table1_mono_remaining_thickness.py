@@ -48,12 +48,12 @@ for arq in os.listdir(path):
         remaining_thickness = ((flaw_time - ext_time) * 1e-3 * c) / 2
         second_row_results_0deg.append(remaining_thickness)
 
-        plt.figure()
-        plt.title(arq.split('.')[0])
-        plt.plot(t_span, a_scan_ext)
-        plt.plot(ext_time, ext_max, 'r.')
-        plt.plot(flaw_time, flaw_max, 'b.')
-        plt.show()
+        # plt.figure(figsize=(8, 6))
+        # plt.title(arq.split('.')[0])
+        # plt.plot(t_span, a_scan_ext)
+        # plt.plot(ext_time, ext_max, 'r.')
+        # plt.plot(flaw_time, flaw_max, 'b.')
+        # plt.show()
 
     elif '2nd' in arq and '45deg' in arq:
         data = file_m2k.read(path + arq, type_insp='contact', water_path=0, freq_transd=5,
@@ -76,12 +76,12 @@ for arq in os.listdir(path):
         remaining_thickness = ((flaw_time - ext_time) * 1e-3 * c) / 2
         second_row_results_45deg.append(remaining_thickness)
 
-        plt.figure()
-        plt.title(arq.split('.')[0])
-        plt.plot(t_span, a_scan_ext)
-        plt.plot(ext_time, ext_max, 'r.')
-        plt.plot(flaw_time, flaw_max, 'b.')
-        plt.show()
+        # plt.figure()
+        # plt.title(arq.split('.')[0])
+        # plt.plot(t_span, a_scan_ext)
+        # plt.plot(ext_time, ext_max, 'r.')
+        # plt.plot(flaw_time, flaw_max, 'b.')
+        # plt.show()
 
     elif '3rd' in arq and '0deg' in arq:
         data = file_m2k.read(path + arq, type_insp='contact', water_path=0, freq_transd=5,
@@ -106,12 +106,12 @@ for arq in os.listdir(path):
         remaining_thickness = ((flaw_time - ext_time) * 1e-3 * c) / 2
         third_row_results_0deg.append(remaining_thickness)
 
-        plt.figure()
-        plt.title(arq.split('.')[0])
-        plt.plot(t_span, a_scan_ext)
-        plt.plot(ext_time, ext_max, 'r.')
-        plt.plot(flaw_time, flaw_max, 'b.')
-        plt.show()
+        # plt.figure()
+        # plt.title(arq.split('.')[0])
+        # plt.plot(t_span, a_scan_ext)
+        # plt.plot(ext_time, ext_max, 'r.')
+        # plt.plot(flaw_time, flaw_max, 'b.')
+        # plt.show()
 
     elif '3rd' in arq and '45deg' in arq:
         data = file_m2k.read(path + arq, type_insp='contact', water_path=0, freq_transd=5,
@@ -136,12 +136,12 @@ for arq in os.listdir(path):
         remaining_thickness = ((flaw_time - ext_time) * 1e-3 * c) / 2
         third_row_results_45deg.append(remaining_thickness)
 
-        plt.figure()
-        plt.title(arq.split('.')[0])
-        plt.plot(t_span, a_scan_ext)
-        plt.plot(ext_time, ext_max, 'r.')
-        plt.plot(flaw_time, flaw_max, 'b.')
-        plt.show()
+        # plt.figure()
+        # plt.title(arq.split('.')[0])
+        # plt.plot(t_span, a_scan_ext)
+        # plt.plot(ext_time, ext_max, 'r.')
+        # plt.plot(flaw_time, flaw_max, 'b.')
+        # plt.show()
 
     elif '4th' in arq and '0deg' in arq:
         data = file_m2k.read(path + arq, type_insp='contact', water_path=0, freq_transd=5,
@@ -166,12 +166,12 @@ for arq in os.listdir(path):
         remaining_thickness = ((flaw_time - ext_time) * 1e-3 * c) / 2
         fourth_row_results_0deg.append(remaining_thickness)
 
-        plt.figure()
-        plt.title(arq.split('.')[0])
-        plt.plot(t_span, a_scan_ext)
-        plt.plot(ext_time, ext_max, 'r.')
-        plt.plot(flaw_time, flaw_max, 'b.')
-        plt.show()
+        # plt.figure()
+        # plt.title(arq.split('.')[0])
+        # plt.plot(t_span, a_scan_ext)
+        # plt.plot(ext_time, ext_max, 'r.')
+        # plt.plot(flaw_time, flaw_max, 'b.')
+        # plt.show()
 
     elif '4th' in arq and '45deg' in arq:
         data = file_m2k.read(path + arq, type_insp='contact', water_path=0, freq_transd=5,
@@ -196,12 +196,12 @@ for arq in os.listdir(path):
         remaining_thickness = ((flaw_time - ext_time) * 1e-3 * c) / 2
         fourth_row_results_45deg.append(remaining_thickness)
 
-        plt.figure()
-        plt.title(arq.split('.')[0])
-        plt.plot(t_span, a_scan_ext)
-        plt.plot(ext_time, ext_max, 'r.')
-        plt.plot(flaw_time, flaw_max, 'b.')
-        plt.show()
+        # plt.figure()
+        # plt.title(arq.split('.')[0])
+        # plt.plot(t_span, a_scan_ext)
+        # plt.plot(ext_time, ext_max, 'r.')
+        # plt.plot(flaw_time, flaw_max, 'b.')
+        # plt.show()
 
 
 second_row_0deg_mean = np.mean(second_row_results_0deg)
