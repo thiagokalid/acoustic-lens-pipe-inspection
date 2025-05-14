@@ -39,7 +39,7 @@ def snell(v1, v2, gamma1, dydx):
     arg[bad_index] = np.tanh(arg[bad_index])
     theta2 = np.arcsin(arg)
     gamma2 = slope - pi / 2 + theta2
-    return gamma2
+    return gamma2, theta1, theta2
 
 
 

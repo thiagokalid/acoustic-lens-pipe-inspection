@@ -80,7 +80,7 @@ for i in range(181):
 
 #%% Focused wave delay law:
 
-focus_radius = inner_radius + 2.25e-3
+focus_radius = inner_radius
 focus_angle = np.copy(alpha_span)
 xf, zf = focus_radius * sin(focus_angle), focus_radius * cos(focus_angle)
 

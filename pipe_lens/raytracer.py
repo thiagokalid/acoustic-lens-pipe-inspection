@@ -1,6 +1,7 @@
 import numpy as np
 
 from numpy import ndarray, pi
+from numpy.linalg import norm
 
 from pipe_lens.raytracing_utils import uhp, roots_bhaskara, snell
 from pipe_lens.acoustic_lens import AcousticLens
@@ -9,13 +10,16 @@ from pipe_lens.transducer import Transducer
 
 __all__ = ["RayTracer"]
 
+FLOAT = np.float32
+
+
 class RayTracer:
     def __init__(self, acoustic_lens: AcousticLens, pipeline: Pipeline, transducer: Transducer):
         self.transducer = transducer
         self.pipeline = pipeline
         self.acoustic_lens = acoustic_lens
 
-    def solve(self, xf, zf, maxiter: int=6):
+    def solve(self, xf, zf, maxiter: int = 6):
         if isinstance(xf, (int, float)) and isinstance(zf, (int, float)):
             xf, zf = np.array([xf]), np.array([zf])
 
@@ -26,6 +30,36 @@ class RayTracer:
 
         return solution
 
+    def get_tofs(self, xf, zf, maxiter: int = 6):
+        n_elem = self.transducer.num_elem
+        n_focii = len(xf)
+
+        coord_elements = np.array([self.transducer.xt, self.transducer.zt]).T
+        coords_reflectors = np.array([xf, zf]).T
+        coords_lens = np.zeros(shape=(n_elem, 2, n_focii))
+        coords_outer = np.zeros(shape=(n_elem, 2, n_focii))
+
+        solution = self.solve(xf, zf, maxiter)
+        for combined_idx in range(n_focii * n_elem):
+            i = combined_idx // n_elem
+            j = combined_idx % n_elem
+
+            coords_lens[j, :, i] = solution[j]['xlens'][i], solution[j]['zlens'][i]
+            coords_outer[j, :, i] = solution[j]['xpipe'][i], solution[j]['zpipe'][i]
+
+        coord_elements_mat = np.tile(coord_elements[:, :, np.newaxis], (1, 1, n_focii))
+        coord_reflectors_mat = np.tile(coords_reflectors[:, :, np.newaxis], (1, 1, n_elem))
+
+        # Compute distances between points where refractions is expected.
+        d1 = norm(coords_lens - coord_elements_mat, axis=1)  # distance between elements and lens
+        d2 = norm(coords_lens - coords_outer, axis=1)  # distance between lens and pipe outer surface
+        d3 = norm(coords_outer - coord_reflectors_mat.T, axis=1)  # distance between pipe outer surface and focus
+
+        c1 = self.acoustic_lens.c1  # lens material
+        c2 = self.acoustic_lens.c2  # coupling medium
+        c3 = self.pipeline.c  # pipe material
+
+        return d1 / c1 + d2 / c2 + d3 / c3
 
     def __newton_batch(self, xf: ndarray, yf: ndarray, iter: int, verbose=False) -> list:
         '''Calls the function newton() one time for each transducer element.
@@ -120,7 +154,7 @@ class RayTracer:
         xlens, ylens = self.acoustic_lens.xy_from_alpha(acurve)
         gamma1 = np.arctan((ylens - zc) / (xlens - xc))
         gamma1 = gamma1 + (gamma1 < 0) * pi  # incident angle
-        gamma2 = snell(c1, c2, gamma1, self.acoustic_lens.dydx_from_alpha(acurve))  # refracted angle
+        gamma2, inc12, ref12 = snell(c1, c2, gamma1, self.acoustic_lens.dydx_from_alpha(acurve))  # refracted angle
         # Line equation which defines the ray within coupling medium (z = ax + b).
         a_line = np.tan(uhp(gamma2))
         b_line = ylens - a_line * xlens
@@ -134,7 +168,7 @@ class RayTracer:
         upper = ycirc1 > ycirc2
         xcirc = xcirc1 * upper + xcirc2 * (1 - upper)
         ycirc = ycirc1 * upper + ycirc2 * (1 - upper)
-        gamma3 = snell(c2, c3, gamma2, self.pipeline.dydx(xcirc))
+        gamma3, inc23, ref23 = snell(c2, c3, gamma2, self.pipeline.dydx(xcirc))
         a3 = np.tan(gamma3)
         b3 = ycirc - a3 * xcirc
         xbottom = -b3 / a3
@@ -143,6 +177,10 @@ class RayTracer:
         xin = (b4 - b3) / (a3 - a4)
         yin = a3 * xin + b3
         dist = (xin - xf) ** 2 + (yin - yf) ** 2
-        dic = {'xlens': xlens, 'zlens': ylens, 'xpipe': xcirc, 'zpipe': ycirc, 'dist': dist}
+        dic = {'xlens': xlens, 'zlens': ylens, 'xpipe': xcirc, 'zpipe': ycirc, 'dist': dist,
+               'interface_12': [inc12, ref12], "interface_23": [inc23, ref23]}
         return dic
+
+    # TODO:
+    # [ ] Add incidence and refraction angle to the dict. The goal is to compute transmission coefficients.
 

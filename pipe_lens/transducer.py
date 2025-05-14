@@ -6,7 +6,7 @@ from numpy import ndarray
 __all__ = ["Transducer"]
 
 class Transducer:
-    def __init__(self, pitch: float = .4e-3, num_elem: int = 64, fc: float = 5e6, bw: float = .4, bwr: float = -6,
+    def __init__(self, pitch: float = .4e-3, num_elem: int = 64, fc: float = 5e6, element_gap:float = .1e-3, bw: float = .4, bwr: float = -6,
                  pulse_type: str = "gaussian"):
         self.pitch = pitch
         self.num_elem = num_elem
@@ -18,6 +18,8 @@ class Transducer:
         self.xt -= np.mean(self.xt)
         self.zt = np.zeros_like(self.xt)
         self.elements = np.arange(1, self.num_elem + 1, 1)
+        self.element_gap = element_gap
+        self.element_width = (self.pitch - self.element_gap)
 
     def get_coords(self, i: int = -1):
         if i == -1:
