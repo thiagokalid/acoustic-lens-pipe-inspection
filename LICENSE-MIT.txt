@@ -1,4 +1,4 @@
-Copyright YEAR AUTHOR_NAMES
+Copyright 2025 Gustavo Pinto Pires, Thiago Estrela Kalid, Tatiana de Almeida Prado, Vinícius Lacerda Costa, Gabriela Ribeiro Pereira, Thiago Alberto Rigo Passarin, Daniel Rodrigues Pipa
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the “Software”), to deal in
