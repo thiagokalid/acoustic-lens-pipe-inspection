@@ -129,7 +129,6 @@ for index in tqdm(range(len(angular_location) * num_versions)):
 
 
     for i in range(n_shots):
-        i = 23
         channels = data.ascan_data[..., i]
         sscan = np.sum(channels, axis=2)
         sscan_db = np.log10(envelope(sscan / sscan.max(), axis=0) + log_cte)
