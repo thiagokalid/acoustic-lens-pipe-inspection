@@ -70,7 +70,7 @@ plt.show()
 
 #%%
 max_per_col = np.max(sscan_windowed, axis=1)
-max_per_col_normalized = (max_per_col -     max_per_col.min()) / (max_per_col.max() - max_per_col.min())
+max_per_col_normalized = (max_per_col - max_per_col.min()) / (max_per_col.max() - max_per_col.min())
 
 max_loc = float(time_grid[tbeg + np.argmax(max_per_col_normalized)])
 

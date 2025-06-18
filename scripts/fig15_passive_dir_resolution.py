@@ -139,15 +139,6 @@ for index in tqdm(range(len(angular_location) * num_versions)):
         widths[i], heights[i], peaks[i], pixels_above_threshold, _ = fwhm(sscan, r_span, ang_span, corners)
         peaks_matrix[i, ii, vv] = peaks[i]
 
-        if False:
-            plt.figure()
-            plt.suptitle(f"i = {i}")
-            plt.subplot(1, 2, 1)
-            plt.pcolormesh(ang_span, r_span, sscan_db, cmap='inferno')
-            plt.subplot(1, 2, 2)
-            plt.pcolormesh(ang_span, r_span, pixels_above_threshold, cmap='inferno')
-            plt.show()
-
     # Finding FWHM
     xspan = np.arange(0, n_shots) - np.where(peaks == peaks.max())[0]
     xspan_matrix[:len(xspan), ii, vv] = xspan
@@ -156,9 +147,6 @@ for index in tqdm(range(len(angular_location) * num_versions)):
 
     normalized_peaks = (peaks - minimum) / (peaks.max() - minimum)
     peaks_percentage = normalized_peaks * 100
-
-    #
-
 
     peaks_interp = lambda x: np.interp(x, xspan, normalized_peaks)
 
@@ -184,7 +172,7 @@ for index in tqdm(range(len(angular_location) * num_versions)):
         ax.yaxis.set_major_formatter(FuncFormatter(lambda x, pos: fr"{x:.0f}"))
         plt.ylim([-10, 110])
         plt.yticks(np.arange(0, 125, 25))
-        plt.xlim([-4.5, 4.5])
+        plt.xlim([-8, 8])
         ytemp = np.arange(20, 60, 1)
         plt.xticks(np.linspace(-4, 4, 5))
         plt.grid(alpha=.5)
@@ -210,17 +198,7 @@ for index in tqdm(range(len(angular_location) * num_versions)):
     time.sleep(5)
     gc.collect()
 
-#%%
-# np.save("peaks_matrix.npy", peaks_matrix)
-
-#problemáticos: v1, 30 graus,
-# v3 34 graus
-
-# plt.figure()
-# plt.plot(xspan_matrix[:, 4, 0], peaks_matrix[:, 4, 0])
-# plt.show()
-
-
+#%% Plotting:
 
 fig, ax = plt.subplots(figsize=(linewidth * .49, 2.6))
 plt.errorbar(angular_location, np.mean(passive_flaw_widths, axis=1), np.std(passive_flaw_widths, axis=1), color='r', ls='None', marker='o', capsize=5, capthick=1, ecolor='black', markersize=3, label="Acoustic lens")
@@ -247,4 +225,3 @@ plt.legend(loc='lower right')
 plt.tight_layout()
 plt.savefig("../figures/passive_dir_resolution_different_angles.pdf")
 plt.show()
-

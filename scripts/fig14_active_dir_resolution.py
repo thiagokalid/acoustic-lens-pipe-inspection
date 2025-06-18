@@ -181,8 +181,6 @@ plt.xticks(np.arange(-1.5, 38.5 + 5, 5))
 plt.xlim([-5, 38.5 + 3])
 plt.tight_layout()
 plt.ylim([0.0, 22])
-# plt.yticks(np.arange(0, 7 + 1, 1))
-# plt.legend(loc="upper left")
 
 # Formating plot:
 ax.xaxis.set_major_formatter(FuncFormatter(lambda x, pos: f"{x:.0f}"))
@@ -195,7 +193,6 @@ plt.show()
 #%% Figure 2:
 fig, ax = plt.subplots(figsize=(linewidth * .485, 2.5))
 
-
 # Width y-axis:
 plt.plot(sweep_angs, cnr_focused_mean, 'o-', linewidth=2, color='k', markersize=4, label="Focused waves")
 ax.fill_between(sweep_angs, cnr_focused_mean - cnr_focused_std, cnr_focused_mean + cnr_focused_std, alpha=0.2, color='k')
@@ -205,7 +202,6 @@ ax.fill_between(sweep_angs, cnr_plane_mean - cnr_plane_std, cnr_plane_mean + cnr
 
 plt.plot(sweep_angs, cnr_single_mean, color="#00CD6C", linewidth=2, label="Single-element")
 ax.fill_between(sweep_angs, cnr_single_mean - cnr_single_std, cnr_single_mean + cnr_single_std, alpha=0.2, color='#00CD6C')
-# plt.legend()
 
 # Axes:
 plt.xticks(sweep_angs)
@@ -215,9 +211,6 @@ plt.grid(alpha=.5)
 plt.xticks(np.arange(-1.5, 38.5 + 5, 5))
 plt.xlim([-5, 38.5 + 3])
 plt.tight_layout()
-# plt.ylim([0.0, 19])
-# plt.yticks(np.arange(0, 18 + 1, 2))
-# plt.legend(loc="upper left")
 
 # Formating plot:
 ax.xaxis.set_major_formatter(FuncFormatter(lambda x, pos: f"{x:.0f}"))
@@ -316,7 +309,7 @@ mean_a= np.mean((focused_height)/single_height)
 mean_b = np.mean((focused_width)/single_width)
 
 
-mean_a= np.mean((focused_height)/single_height)
+mean_a = np.mean((focused_height)/single_height)
 mean_b = np.mean((focused_width)/single_width)
 print("All angspan = ", (mean_a + mean_b)/2)
 
